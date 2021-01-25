@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button>
+      </button>
+      <h1 routerLink="">Patient Record Management System</h1>
+      <span class="menu-spacer"></span>
+      <div class="navbar">
+  
+  
+        <a mat-button [routerLink]="'add-record'"> Add Record </a>
+        <a mat-button [routerLink]="'view-record'"> View Record </a>
+        <a mat-button [routerLink]="'activate-record'"> Activate Record </a>
+        <a mat-button [routerLink]="'deactivate-record'"> Deactivate Record </a>
+        <a mat-button [routerLink]="'generate-report'"> Generate Report </a>
+
+  
+      </div>
+    </mat-toolbar-row>
+  
+  </mat-toolbar>
+  <div class="row">
+    <router-outlet></router-outlet>
+  </div>
+  
