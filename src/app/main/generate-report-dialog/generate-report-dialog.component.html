@@ -63,7 +63,13 @@
                                     Please enter the date range.
                                 </mat-error>
                             </div>
-                </mat-list>             
+                </mat-list>    
+                <div>
+                    <mat-error *ngIf="!checkFiltersValid()">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Please select a field to filter.
+                    </mat-error>
+                </div>         
             </div>
     </mat-dialog-content>            
     <mat-dialog-actions align="end">

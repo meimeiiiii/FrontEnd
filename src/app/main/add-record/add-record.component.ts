@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class AddRecordComponent implements OnInit {
+  maxDate = new Date();
   addPatient: FormGroup;
   valid = true;
   submitted = false;

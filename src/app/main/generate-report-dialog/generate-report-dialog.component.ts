@@ -28,17 +28,24 @@ filter = this.fb.group({
     startDate:  new FormControl(''),
     endDate:  new FormControl(''),
 });
-submitted = false;
+submitted: boolean = false;
 
 // FORM FUNCTION
 onSubmit(event) {
   event.preventDefault();
   this.submitted = true;
-  
-  if (this.filter.valid) {
+
+  if (this.filter.valid && this.checkFiltersValid()) {
     this.confirm();
     this.dialogRef.close();
+  }else{
+    console.log('INVALID!!!');
   }
+}
+
+checkFiltersValid(): boolean{
+  return  !(this.submitted && this.isShownFilter && this.filter.get('status').value == false 
+  && this.filter.get('gender').value == false && this.filter.get('birthdate').value == false);
 }
 
 confirm(){
@@ -141,7 +148,6 @@ toggleShowFilter() {
     this.isShownGender = false;
     this.isShownBirthdate = false;
   }
-  // this.setValidators();
 }
 
 toggleShowStatus() {
@@ -168,8 +174,13 @@ setValidators(){
       this.filter.get('genderCheckbox').clearValidators();
       this.filter.get('startDate').clearValidators();
       this.filter.get('endDate').clearValidators();
-    }
-    this.filter.get('startDate').updateValueAndValidity();
+
+      this.filter.get('filterValue').updateValueAndValidity();
+      this.filter.get('statusValue').updateValueAndValidity();
+      this.filter.get('genderCheckbox').updateValueAndValidity();
+      this.filter.get('startDate').updateValueAndValidity();
+      this.filter.get('endDate').updateValueAndValidity();
+    }  
   });
 
   this.filter.get('status').valueChanges
