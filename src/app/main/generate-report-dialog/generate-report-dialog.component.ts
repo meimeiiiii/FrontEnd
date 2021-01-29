@@ -21,7 +21,6 @@ export class GenerateReportDialogComponent implements OnInit {
 filter = this.fb.group({
   filterValue:  new FormControl(''),
   status:  new FormControl(''), 
-    // statusValue: [''],
     statusValue: new FormControl(''),
   gender:  new FormControl(''),  
   genderCheckbox:  new FormControl(''),
@@ -32,17 +31,13 @@ filter = this.fb.group({
 submitted = false;
 
 // FORM FUNCTION
-
 onSubmit(event) {
   event.preventDefault();
   this.submitted = true;
   
   if (this.filter.valid) {
-    console.log("VALID!!!");
     this.confirm();
     this.dialogRef.close();
-  }else{
-    console.log("INVALID!!!");
   }
 }
 
@@ -111,7 +106,6 @@ getCurrentDateTime() : string {
 }
 
 downLoadFile(data: any, type: string) {
-
   var fileName = "PatientRecords_" + this.getCurrentDateTime() + ".xlsx";
 
   let blob = new Blob([data], { type: type});
@@ -153,24 +147,19 @@ toggleShowFilter() {
 toggleShowStatus() {
   this.submitted = false;
   this.isShownStatus = ! this.isShownStatus;
-  // this.setValidators();
 }
 
 toggleShowGender() {
   this.submitted = false;
   this.isShownGender = ! this.isShownGender;
-  // this.setValidators();
 }
 
 toggleShowBirthdate() {
   this.submitted = false;
   this.isShownBirthdate = ! this.isShownBirthdate;
-  // this.setValidators();
 }
 
 setValidators(){
-  console.log("setValidators()");
-
   this.filter.get('filterValue').valueChanges
   .subscribe(check => {
     if(check == false){
@@ -188,7 +177,6 @@ setValidators(){
       if(check == true){
         this.filter.get('statusValue').setValidators([Validators.required]);
       } else{
-        console.log("STATUS NOT REQUIRED");
         this.filter.get('statusValue').clearValidators();
       }
       this.filter.get('statusValue').updateValueAndValidity();
