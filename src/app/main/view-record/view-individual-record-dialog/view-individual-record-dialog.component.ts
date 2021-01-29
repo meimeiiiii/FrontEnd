@@ -1,6 +1,5 @@
 import { Component, OnInit ,Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FormGroup, FormBuilder, Validators , FormArray, FormControl } from '@angular/forms';
 import { AddressService } from 'src/app/services/add-address.service';
@@ -36,7 +35,6 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
 
       birthdate:[this.data.birthdate, [Validators.required]],
       gender:[this.data.gender, [Validators.required]],
-      address:[this.data.address, [Validators.required]]
     })
     this.addressForm=this.formBuilder.group({
       addressArray:this.formBuilder.array([
