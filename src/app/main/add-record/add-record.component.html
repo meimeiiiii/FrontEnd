@@ -1,7 +1,7 @@
 <div class="column">
   <img src="../assets/addpatient.png" >
 </div>
-<div *ngIf="!submitted" class="submit-form">
+<div *ngIf="!submitted && valid" class="submit-form">
   <form [formGroup]="addPatient" class="form-group" (submit)="savePatient()">
       <mat-form-field  appearance="outline">
           <mat-label> First Name
@@ -53,4 +53,8 @@
  <div *ngIf="submitted" class="confirm">
   <h4>Patient was added successfully!</h4><br><br>
   <button (click)="newPatient()" class="btn btn-success" >Back</button>
+</div>
+<div *ngIf="!valid" class="confirm">
+  <h4>User cannot have duplicate email or contact number</h4><br><br>
+  <button (click)="validUser()" class="btn btn-danger" >Back</button>
 </div>

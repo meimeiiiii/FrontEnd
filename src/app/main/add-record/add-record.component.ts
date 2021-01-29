@@ -1,4 +1,3 @@
-
 import { Patient } from '../../models/patient.model';
 import { PatientService } from '../../services/patient.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class AddRecordComponent implements OnInit {
   addPatient: FormGroup;
+  valid = true;
   submitted = false;
   constructor( private PatientService:PatientService, private formBuilder: FormBuilder) { }
 
@@ -38,12 +38,16 @@ export class AddRecordComponent implements OnInit {
           this.submitted = true;
         },
         error => {
+          this.valid = false;
+          this.submitted = false;
           console.log(error);
-        }); 
+        });
   }
   newPatient(): void{
     this.submitted = false;
     this.addPatient.reset();
   }
-
+  validUser():void{
+    this.valid = true;
+  }
 }
