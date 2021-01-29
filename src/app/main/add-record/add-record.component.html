@@ -1,99 +1,56 @@
 <div class="column">
-  <img class="landing_image" src="../assets/addpatient.png" alt="health care">
+  <img src="../assets/addpatient.png" >
 </div>
-<div>
-    <div class="submit-form">
-      <div *ngIf="!submitted">
-        <form>
-        <div class="form-group">
-          <label for="title">Last Name </label>
-          <input
-            type="text"
-            class="form-control"
-            (keyup)="setLastname($event.target.value)"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-            <label for="title">First Name </label>
-            <input
-              type="text"
-              class="form-control"
-              (keyup)="setFirstname($event.target.value)"
-              required
-            />
-        </div>
-
-        <div class="form-group">
-            <label for="title">Middle Name </label>
-            <input
-              type="text"
-              class="form-control"
-              (keyup)="setMiddlename($event.target.value)"
-              required
-            />
-        </div>
-        <div class="form-group">
-            <label for="title">Address </label>
-            <input
-              type="text"
-              class="form-control"
-              (keyup)="setAddress($event.target.value)"
-              required
-            />
-        </div>
-
-        <div class="form-group">
-            <label for="title">Email </label>
-            <input
-              type="email"
-              class="form-control"
-              (keyup)="setEmail($event.target.value)"
-              required
-            />
-        </div>
-
-        <div class="form-group">
-            <label for="title">Contact Number </label>
-            <input
-              type="tel"
-              class="form-control"
-              (keyup)="setNumber($event.target.value)"
-              pattern="[0-9]{11}"
-              required
-            />
-        </div>
-
-        <div class="form-group">
-            <label for="title">Birthdate </label>
-            <input
-              type="date"
-              class="form-control"
-              value="yyyy-mm-dd"
-              (change)="setBirthdate($event.target.value)"
-              required
-            />
-        </div>
-
-        <div class="form-group">
-            <label for="title">Gender </label>
-            <select class="form-control" (change)="setGender($event.target.value)" required> 
-                <option selected disabled></option>
-                <option value="Male" >Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-        </div>
-        <button (click)="savePatient()" class="btn btn-success">Submit</button>
-      </form>
-    </div>
-
-
-    <div *ngIf="submitted" class="confirm">
-      <h4>Patient was added successfully!</h4><br><br>
-      <button (click)="newPatient()" class="btn btn-success" >Back</button>
-    </div>
-  </div>
-<div>
-
+<div *ngIf="!submitted" class="submit-form">
+  <form [formGroup]="addPatient" class="form-group" (submit)="savePatient()">
+      <mat-form-field  appearance="outline">
+          <mat-label> First Name
+          </mat-label>
+          <input matInput formControlName="firstName" required>
+      </mat-form-field><br>
+      <mat-form-field appearance="outline">
+        <mat-label> Middle Name
+        </mat-label>
+        <input matInput formControlName="middleName" required>
+    </mat-form-field><br>
+    <mat-form-field appearance="outline">
+        <mat-label> Last Name
+        </mat-label>
+        <input matInput formControlName="lastName" required>
+    </mat-form-field><br>
+    <mat-form-field appearance="outline">
+      <mat-label> Address
+      </mat-label>
+      <input matInput formControlName="address" required>
+  </mat-form-field><br>
+  <mat-form-field appearance="outline">
+    <mat-label> Contact Number
+    </mat-label>
+    <input matInput formControlName="contactNumber" required>
+  </mat-form-field><br>
+    <mat-form-field appearance="outline">
+        <mat-label> Email
+        </mat-label>
+        <input matInput formControlName="email" required>
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+        <mat-label>Birthdate</mat-label>
+        <input matInput formControlName="birthdate" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field><br>
+    <mat-form-field appearance="outline">
+      <mat-label>Gender</mat-label>
+      <select formControlName="gender" matNativeControl required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="others">Others</option>
+      </select>
+    </mat-form-field><br>
+    <button [disabled]="!addPatient.valid" class="btn btn-success">Submit</button>
+  </form>
+ </div>
+ <div *ngIf="submitted" class="confirm">
+  <h4>Patient was added successfully!</h4><br><br>
+  <button (click)="newPatient()" class="btn btn-success" >Back</button>
+</div>

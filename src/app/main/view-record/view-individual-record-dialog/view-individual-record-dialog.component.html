@@ -4,9 +4,24 @@
 <h2 mat-dialog-title>Patient Record</h2>
 <mat-dialog-content class="mat-typography">
     <div class="example-container">
-
+        <div class="form-container">
+            <form [formGroup]="recordForm" (submit)="submitRecord()">
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label> First Name
+                    </mat-label>
+                    <input matInput formControlName="firstName" required>
+                </mat-form-field>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label> Middle Name
+                    </mat-label>
+                    <input matInput formControlName="middleName" required>
+                </mat-form-field>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label> Last Name
+                    </mat-label>
+                    <input matInput formControlName="lastName" required>
+                </mat-form-field>
         <mat-tab-group animationDuration="1000ms">
-
             <mat-tab label="Edit">
                 <br>
                 <br>
@@ -73,32 +88,33 @@
         
         
             </mat-tab>
-
-
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label> Gender
+                    </mat-label>
+                    <input matInput formControlName="gender" required>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label> Address
+                    </mat-label>
+                    <input matInput formControlName="address" required>
+                </mat-form-field>
+            </form>
+        </div>
             <mat-tab label="Addresses">
                 <br>
-
                     <div>
-
                         <button  (click)="createAddress()" mat-flat-button color="primary">Add Address</button>
-    
                         <!-- <button mat-flat-button *ngIf="isEdit" mat-button (click)="submitRecord()" color="accent"
                         cdkFocusInitial>Submit</button> -->
-    
-                    </div>
-                    
-                        
+                    </div>        
                         <form [formGroup]="addressForm">
     
                             <mat-form-field class="form-field" appearance="outline">
                                 <mat-label> Address </mat-label>
                                 <input matInput formControlName="address">
-                            </mat-form-field>
-                            
-    
-                        
+                            </mat-form-field>                 
                         <div formArrayName="addressArray">
-    
                             <div *ngFor="let address of addressArray.controls;let i = index" >
                                 
                                 <mat-form-field class="form-field" >
@@ -106,23 +122,13 @@
                                     </mat-label>
                                     <input matInput [formControlName]="i" required>
                                 </mat-form-field>
-                            </div>
-                              
-                            
+                            </div> 
                         </div>
-                    
                     </form>
                     <button  (click)="submitAddress()" mat-flat-button color="accent">Submit</button>
                 </mat-tab>
-
             <br>
-
-          
-
-               
-           
         </mat-tab-group>
-
     </div>
    
 

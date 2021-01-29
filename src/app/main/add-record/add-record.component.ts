@@ -1,7 +1,9 @@
+
 import { Patient } from '../../models/patient.model';
 import { PatientService } from '../../services/patient.service';
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-add-record',
@@ -10,36 +12,26 @@ import { DatePipe } from '@angular/common';
 })
 
 export class AddRecordComponent implements OnInit {
-  patient: Patient = {
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    address: '',
-    email: '',
-    contactNumber: '',
-    birthdate: new Date(),
-    gender: '',
-    status: 1,
-  };
+  addPatient: FormGroup;
   submitted = false;
-  constructor(private PatientService:PatientService) { }
+  constructor( private PatientService:PatientService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.addPatient=this.formBuilder.group({
+      firstName:["", [Validators.required]],
+      middleName:["", [Validators.required]],
+      lastName:["", [Validators.required]],
+      email:["", [Validators.required,Validators.email]],
+      contactNumber:["", [Validators.required, Validators.pattern("[0-9]{11}")]],
+      birthdate:["", [Validators.required]],
+      gender:["", [Validators.required]],
+      address:["", [Validators.required]],
+      status:["1"],
+    })
   }
   savePatient(): void{
-    const data = {
-      lastName: this.patient.lastName,
-      firstName: this.patient.firstName,
-      middleName: this.patient.middleName,
-      address: this.patient.address,
-      email: this.patient.email,
-      contactNumber: this.patient.contactNumber,
-      birthdate: this.patient.birthdate,
-      gender: this.patient.gender,
-      status: 1,
-    }
-    
-    this.PatientService.create(data)
+    console.log(this.addPatient.value);
+    this.PatientService.create(this.addPatient.value)
       .subscribe(
         response => {
           console.log(response);
@@ -47,44 +39,11 @@ export class AddRecordComponent implements OnInit {
         },
         error => {
           console.log(error);
-        });
-  }
-  setLastname(val){
-    this.patient.lastName = val;
-  }
-  setFirstname(val){
-    this.patient.firstName = val;
-  }
-  setMiddlename(val){
-    this.patient.middleName = val;
-  }
-  setAddress(val){
-    this.patient.address = val;
-  }
-  setEmail(val){
-    this.patient.email = val;
-  }
-  setBirthdate(val){
-    this.patient.birthdate = val;
-  }
-  setGender(val){
-    this.patient.gender = val;
-  }
-  setNumber(val){
-    this.patient.contactNumber = val;
+        }); 
   }
   newPatient(): void{
     this.submitted = false;
-    this.patient = {
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    address: '',
-    email: '',
-    contactNumber: '',
-    birthdate: new Date,
-    gender: '',
-    status: 1,
-    };
+    this.addPatient.reset();
   }
+
 }
