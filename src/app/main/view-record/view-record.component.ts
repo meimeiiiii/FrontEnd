@@ -25,7 +25,7 @@ export interface UserData {
 })
 export class ViewRecordComponent implements OnInit {
 
-  displayedColumns: string[] = ['patientId', 'firstName', 'email', 'contactNumber', 'birthdate', 'gender', 'address', 'status', 'actions'];
+  displayedColumns: string[] = ['patientId', 'firstName', 'middleName', 'lastName', 'email', 'contactNumber', 'date', 'gender', 'address', 'status', 'actions'];
   dataSource: MatTableDataSource<Patient>;
 
   activatedRecords;
@@ -57,15 +57,19 @@ export class ViewRecordComponent implements OnInit {
     this.viewRecordService.showPatientRecords().subscribe(p => {
       this.allRecords = p.map(p => {
         p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-        p['date'] = new Date(p['date']).toLocaleDateString('en-US');
+        p['date'] = new Date(p['birthdate']).toDateString();
         return p;
+
       })
       this.dataSource = new MatTableDataSource(this.allRecords);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
+
       this.isLoading = false;
     }
     )
+
   }
 
   ngAfterViewInit() {
@@ -75,16 +79,19 @@ export class ViewRecordComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.dataSource.filterPredicate =
+      (data: any, filter: string) => {
+        return data.firstName.toLowerCase().indexOf(filter) == 0 || data.middleName.toLowerCase().indexOf(filter) == 0 ||
+          data.lastName.toLowerCase().indexOf(filter) == 0 || data.gender.toLowerCase().indexOf(filter) == 0 ||
+          data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().includes(filter);
+      };
+  
   }
 
 
   openDialog(row) {
     const dialogRef = this.dialog.open(ViewIndividualRecordDialogComponent, { data: row });
-    
+
 
     dialogRef.afterClosed().subscribe(result => {
       this.onValChange(this.value);
