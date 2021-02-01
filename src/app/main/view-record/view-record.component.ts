@@ -83,9 +83,9 @@ export class ViewRecordComponent implements OnInit {
       (data: any, filter: string) => {
         return data.firstName.toLowerCase().indexOf(filter) == 0 || data.middleName.toLowerCase().indexOf(filter) == 0 ||
           data.lastName.toLowerCase().indexOf(filter) == 0 || data.gender.toLowerCase().indexOf(filter) == 0 ||
-          data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().includes(filter);
+          data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().indexOf(filter) == 0;
       };
-  
+
   }
 
 
