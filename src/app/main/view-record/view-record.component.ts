@@ -108,7 +108,7 @@ export class ViewRecordComponent implements OnInit {
           this.activatedRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
             p['firstLast'] = `${p.firstName} ${p.lastName}`;
-            p['date'] = new Date(p['date']).toLocaleDateString('en-US');
+            p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
           this.dataSource = new MatTableDataSource(this.activatedRecords);
@@ -123,7 +123,7 @@ export class ViewRecordComponent implements OnInit {
           this.deactivatedRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
             p['firstLast'] = `${p.firstName} ${p.lastName}`;
-            p['date'] = new Date(p['date']).toLocaleDateString('en-US');
+            p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
           this.dataSource = new MatTableDataSource(this.deactivatedRecords);
@@ -138,7 +138,7 @@ export class ViewRecordComponent implements OnInit {
           this.allRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
             p['firstLast'] = `${p.firstName} ${p.lastName}`;
-            p['date'] = new Date(p['date']).toLocaleDateString('en-US');
+            p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
           this.dataSource = new MatTableDataSource(this.allRecords);
