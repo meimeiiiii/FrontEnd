@@ -1,6 +1,24 @@
 <div class="dialog">
     <div *ngIf="!isConfirmationScreen">
         <h2 mat-dialog-title>Patient Record</h2>
+        <div *ngIf="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success ! </strong> Data has been updated
+        </div>
+        <div *ngIf="alertUserNotFound" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error ! </strong> Failed to Update Data User Not Found!
+        </div>
+        <div *ngIf="alertError" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error ! </strong> Internal Error Occured, Please Contact Administrator!
+        </div>
+        <div *ngIf="alertEmailDuplicateExist" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Error ! </strong> Email Already Used Please Enter Another!
+        </div>
+        <div *ngIf="alertContactNumDuplicateExist" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Error ! </strong> Contact Number Already Used Please Enter Another!
+        </div>
+        <div *ngIf="alertEmailContactNumDuplicateExist" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Error ! </strong> Contact Number and Email Already Used Please Enter Another!
+        </div>
         <mat-dialog-content class="mat-typography">
             <div class="example-container">
 
@@ -10,67 +28,96 @@
                         <br>
                         <br>
                         <div class="form-container">
-                            <form [formGroup]="recordForm" (submit)="submitRecord()">
-
+                            <form [formGroup]="recordForm" (submit)="submitEditRecordForm()">
                                 <mat-form-field class="form-field" appearance="outline">
                                     <mat-label> First Name
                                     </mat-label>
-                                    <input matInput formControlName="firstName" required>
+                                    <input  matInput 
+                                            formControlName="firstName" 
+                                            (keyup)="setFirstname($event.target.value)" 
+                                            required>
                                 </mat-form-field>
+                                &nbsp;
                                 <mat-form-field class="form-field" appearance="outline">
                                     <mat-label> Middle Name
                                     </mat-label>
-                                    <input matInput formControlName="middleName" required>
+                                    <input  matInput
+                                            formControlName="middleName"
+                                            (keyup)="setMiddlename($event.target.value)">
                                 </mat-form-field>
+                                &nbsp;
                                 <mat-form-field class="form-field" appearance="outline">
                                     <mat-label> Last Name
                                     </mat-label>
-                                    <input matInput formControlName="lastName" required>
+                                    <input  matInput
+                                            formControlName="lastName"
+                                            (keyup)="setLastname($event.target.value)"
+                                            required>
                                 </mat-form-field>
+                
                                 <br>
                                 <mat-form-field class="form-field" appearance="outline">
                                     <mat-label> Email
                                     </mat-label>
-                                    <input matInput formControlName="email" required>
+                                    <input  matInput
+                                            formControlName="email"
+                                            email
+                                            type="email"
+                                            class="form-control" 
+                                            (keyup)="setEmail($event.target.value)"
+                                            required>
                                 </mat-form-field>
-
-
-
+                                &nbsp;
                                 <mat-form-field appearance="fill">
                                     <mat-label>Birthdate</mat-label>
-                                    <input matInput formControlName="birthdate" [matDatepicker]="picker">
+                                    <input  matInput
+                                            [max]="maxDate"
+                                            formControlName="birthdate"
+                                            [matDatepicker]="picker"
+                                            value="yyyy-mm-dd"
+                                            (dateChange)="setBirthdate($event.target.value)">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
-
+                                &nbsp;
                                 <mat-form-field class="form-field" appearance="outline">
                                     <mat-label> Gender
                                     </mat-label>
-                                    <input matInput formControlName="gender" required>
+                                    <select matNativeControl
+                                            formControlName="gender"
+                                            (change)="setGender($event.target.value)"
+                                            required>
+                                        <option selected disabled></option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </mat-form-field>
-
+                
                                 <br>
-
                                 <mat-form-field class="form-field" appearance="outline">
                                     <mat-label> Contact Number
                                     </mat-label>
-                                    <input matInput formControlName="contactNumber" required>
+                                    <input  matInput 
+                                            formControlName="contactNumber"
+                                            (keyup)="setContactNumber($event.target.value)"
+                                            pattern="[0-9]{11}"
+                                            maxlength=11 
+                                            required>
                                 </mat-form-field>
-
+                                &nbsp;
                                 <mat-form-field class="form-field" appearance="outline">
                                     <mat-label> Address
                                     </mat-label>
-                                    <input matInput formControlName="address" required>
+                                    <input  matInput 
+                                            formControlName="address" 
+                                            (keyup)="setAddress($event.target.value)" 
+                                            required>
                                 </mat-form-field>
-
-                                <br>
-                                <button *ngIf="isEdit" (click)="submitEditRecordForm()" mat-flat-button
-                                    color="accent">Submit</button>
-
+                
                             </form>
 
                         </div>
-
+                        <button mat-flat-button *ngIf="isEdit" [disabled]="recordForm.invalid"  mat-button (click)="submitEditRecordForm()" color="accent" >Submit</button>
 
                     </mat-tab>
 
