@@ -57,6 +57,7 @@ export class ViewRecordComponent implements OnInit {
     this.viewRecordService.showPatientRecords().subscribe(p => {
       this.allRecords = p.map(p => {
         p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
+        p['firstLast'] = `${p.firstName} ${p.lastName}`;
         p['date'] = new Date(p['birthdate']).toDateString();
         return p;
 
@@ -83,7 +84,8 @@ export class ViewRecordComponent implements OnInit {
       (data: any, filter: string) => {
         return data.firstName.toLowerCase().indexOf(filter) == 0 || data.middleName.toLowerCase().indexOf(filter) == 0 ||
           data.lastName.toLowerCase().indexOf(filter) == 0 || data.gender.toLowerCase().indexOf(filter) == 0 ||
-          data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().indexOf(filter) == 0;
+          data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().indexOf(filter) == 0||
+          data.firstLast.toLowerCase().indexOf(filter) == 0;
       };
 
   }
@@ -105,6 +107,7 @@ export class ViewRecordComponent implements OnInit {
         this.viewRecordService.showActivatedPatientRecords().subscribe(p => {
           this.activatedRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
+            p['firstLast'] = `${p.firstName} ${p.lastName}`;
             p['date'] = new Date(p['date']).toLocaleDateString('en-US');
             return p;
           })
@@ -119,6 +122,7 @@ export class ViewRecordComponent implements OnInit {
         this.viewRecordService.showDeactivatedPatientRecords().subscribe(p => {
           this.deactivatedRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
+            p['firstLast'] = `${p.firstName} ${p.lastName}`;
             p['date'] = new Date(p['date']).toLocaleDateString('en-US');
             return p;
           })
@@ -133,6 +137,7 @@ export class ViewRecordComponent implements OnInit {
         this.viewRecordService.showPatientRecords().subscribe(p => {
           this.allRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
+            p['firstLast'] = `${p.firstName} ${p.lastName}`;
             p['date'] = new Date(p['date']).toLocaleDateString('en-US');
             return p;
           })
