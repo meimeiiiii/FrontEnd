@@ -9,14 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewIndividualRecordDialogComponent } from './view-individual-record-dialog/view-individual-record-dialog.component';
 import { MatTable } from '@angular/material/table';
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
-
 
 @Component({
   selector: 'app-view-record',
@@ -25,7 +17,7 @@ export interface UserData {
 })
 export class ViewRecordComponent implements OnInit {
 
-  displayedColumns: string[] = ['patientId', 'firstName', 'middleName', 'lastName', 'email', 'contactNumber', 'date', 'gender', 'address', 'status', 'actions'];
+  displayedColumns: string[] = ['patientId', 'firstName', 'middleName', 'lastName', 'email', 'contactNumber',  'status', 'actions'];
   dataSource: MatTableDataSource<Patient>;
 
   activatedRecords;
@@ -44,7 +36,7 @@ export class ViewRecordComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild('recordTable', { static: true }) table: MatTable<any>;
 
   constructor(private viewRecordService: ViewRecordService, public dialog: MatDialog) {
 
@@ -52,24 +44,7 @@ export class ViewRecordComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
-
-    this.viewRecordService.showPatientRecords().subscribe(p => {
-      this.allRecords = p.map(p => {
-        p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-        p['date'] = new Date(p['birthdate']).toDateString();
-        return p;
-
-      })
-      this.dataSource = new MatTableDataSource(this.allRecords);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-
-      this.isLoading = false;
-    }
-    )
-
+    this.onValChange(this.value);
   }
 
   ngAfterViewInit() {
@@ -83,29 +58,30 @@ export class ViewRecordComponent implements OnInit {
       (data: any, filter: string) => {
         return data.firstName.toLowerCase().indexOf(filter) == 0 || data.middleName.toLowerCase().indexOf(filter) == 0 ||
           data.lastName.toLowerCase().indexOf(filter) == 0 || data.gender.toLowerCase().indexOf(filter) == 0 ||
-          data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().includes(filter);
+          data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().indexOf(filter) == 0 ||
+          data.firstLast.toLowerCase().indexOf(filter) == 0;
       };
-  
-  }
 
+  }
 
   openDialog(row) {
     const dialogRef = this.dialog.open(ViewIndividualRecordDialogComponent, { data: row });
-
-
     dialogRef.afterClosed().subscribe(result => {
       this.onValChange(this.value);
     })
   }
+
   onValChange(value) {
     this.isLoading = true;
+    this.dataSource = null;
     this.value = value;
     switch (value) {
       case 'Activated':
         this.viewRecordService.showActivatedPatientRecords().subscribe(p => {
           this.activatedRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-            p['date'] = new Date(p['date']).toLocaleDateString('en-US');
+            p['firstLast'] = `${p.firstName} ${p.lastName}`;
+            p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
           this.dataSource = new MatTableDataSource(this.activatedRecords);
@@ -119,7 +95,8 @@ export class ViewRecordComponent implements OnInit {
         this.viewRecordService.showDeactivatedPatientRecords().subscribe(p => {
           this.deactivatedRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-            p['date'] = new Date(p['date']).toLocaleDateString('en-US');
+            p['firstLast'] = `${p.firstName} ${p.lastName}`;
+            p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
           this.dataSource = new MatTableDataSource(this.deactivatedRecords);
@@ -133,7 +110,8 @@ export class ViewRecordComponent implements OnInit {
         this.viewRecordService.showPatientRecords().subscribe(p => {
           this.allRecords = p.map(p => {
             p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-            p['date'] = new Date(p['date']).toLocaleDateString('en-US');
+            p['firstLast'] = `${p.firstName} ${p.lastName}`;
+            p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
           this.dataSource = new MatTableDataSource(this.allRecords);
@@ -145,7 +123,9 @@ export class ViewRecordComponent implements OnInit {
         break;
       default:
 
+
     }
+
 
   }
 

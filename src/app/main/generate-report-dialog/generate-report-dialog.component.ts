@@ -29,6 +29,7 @@ filter = this.fb.group({
     endDate:  new FormControl(''),
 });
 submitted: boolean = false;
+maxDate = new Date();
 
 // FORM FUNCTION
 onSubmit(event) {
