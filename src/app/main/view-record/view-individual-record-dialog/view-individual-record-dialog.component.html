@@ -1,155 +1,170 @@
+<div class="dialog">
+    <div *ngIf="!isConfirmationScreen">
+        <h2 mat-dialog-title>Patient Record</h2>
+        <mat-dialog-content class="mat-typography">
+            <div class="example-container">
 
+                <mat-tab-group animationDuration="1000ms">
 
-
-<h2 mat-dialog-title>Patient Record</h2>
-<mat-dialog-content class="mat-typography">
-    <div class="example-container">
-
-        <mat-tab-group animationDuration="1000ms">
-
-            <mat-tab label="Edit">
-                <br>
-                <br>
-                <div class="form-container">
-                    <form [formGroup]="recordForm">
-        
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label> First Name
-                            </mat-label>
-                            <input matInput formControlName="firstName" required>
-                        </mat-form-field>
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label> Middle Name
-                            </mat-label>
-                            <input matInput formControlName="middleName" required>
-                        </mat-form-field>
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label> Last Name
-                            </mat-label>
-                            <input matInput formControlName="lastName" required>
-                        </mat-form-field>
+                    <mat-tab label="Edit">
                         <br>
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label> Email
-                            </mat-label>
-                            <input matInput formControlName="email" required>
-                        </mat-form-field>
-        
-        
-        
-                        <mat-form-field appearance="fill">
-                            <mat-label>Birthdate</mat-label>
-                            <input matInput formControlName="birthdate" [matDatepicker]="picker">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-        
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label> Gender
-                            </mat-label>
-                            <input matInput formControlName="gender" required>
-                        </mat-form-field>
+                        <br>
+                        <div class="form-container">
+                            <form [formGroup]="recordForm" (submit)="submitRecord()">
 
+                                <mat-form-field class="form-field" appearance="outline">
+                                    <mat-label> First Name
+                                    </mat-label>
+                                    <input matInput formControlName="firstName" required>
+                                </mat-form-field>
+                                <mat-form-field class="form-field" appearance="outline">
+                                    <mat-label> Middle Name
+                                    </mat-label>
+                                    <input matInput formControlName="middleName" required>
+                                </mat-form-field>
+                                <mat-form-field class="form-field" appearance="outline">
+                                    <mat-label> Last Name
+                                    </mat-label>
+                                    <input matInput formControlName="lastName" required>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field class="form-field" appearance="outline">
+                                    <mat-label> Email
+                                    </mat-label>
+                                    <input matInput formControlName="email" required>
+                                </mat-form-field>
+
+
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Birthdate</mat-label>
+                                    <input matInput formControlName="birthdate" [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+
+                                <mat-form-field class="form-field" appearance="outline">
+                                    <mat-label> Gender
+                                    </mat-label>
+                                    <input matInput formControlName="gender" required>
+                                </mat-form-field>
+
+                                <br>
+
+                                <mat-form-field class="form-field" appearance="outline">
+                                    <mat-label> Contact Number
+                                    </mat-label>
+                                    <input matInput formControlName="contactNumber" required>
+                                </mat-form-field>
+
+                                <mat-form-field class="form-field" appearance="outline">
+                                    <mat-label> Address
+                                    </mat-label>
+                                    <input matInput formControlName="address" required>
+                                </mat-form-field>
+
+                                <br>
+                                <button *ngIf="isEdit" (click)="submitEditRecordForm()" mat-flat-button
+                                    color="accent">Submit</button>
+
+                            </form>
+
+                        </div>
+
+
+                    </mat-tab>
+
+
+                    <mat-tab label="Addresses">
                         <br>
 
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label> Contact Number
-                            </mat-label>
-                            <input matInput formControlName="contactNumber" required>
-                        </mat-form-field>
+                        <div>
 
-                        <mat-form-field class="form-field" appearance="outline">
-                            <mat-label> Address
-                            </mat-label>
-                            <input matInput formControlName="address" required>
-                        </mat-form-field>
-        
-                        <br>
-                        <button  *ngIf="isEdit" (click)="submitEditRecordForm()" mat-flat-button color="accent">Submit</button>
-
-                    </form>
-                    
-                </div>
-        
-        
-            </mat-tab>
+                            <button (click)="createAddress()" mat-flat-button color="primary">Add Address</button>
 
 
-            <mat-tab label="Addresses">
-                <br>
+                        </div>
 
-                    <div>
 
-                        <button  (click)="createAddress()" mat-flat-button color="primary">Add Address</button>
-    
-                        <!-- <button mat-flat-button *ngIf="isEdit" mat-button (click)="submitRecord()" color="accent"
-                        cdkFocusInitial>Submit</button> -->
-    
-                    </div>  
-                    
-                        
                         <form [formGroup]="addressForm">
-    
+
                             <mat-form-field class="form-field" appearance="outline">
                                 <mat-label> Address </mat-label>
                                 <input matInput formControlName="address">
                             </mat-form-field>
-                            
-    
-                        
-                        <div formArrayName="addressArray">
-    
-                            <div *ngFor="let address of addressArray.controls;let i = index" >
-                                
-                                <mat-form-field class="form-field" >
-                                    <mat-label> Address
-                                    </mat-label>
-                                    <input matInput [formControlName]="i" required>
-                                </mat-form-field>
+
+
+
+                            <div formArrayName="addressArray">
+
+                                <div *ngFor="let address of addressArray.controls;let i = index">
+
+                                    <mat-form-field class="form-field">
+                                        <mat-label> Address
+                                        </mat-label>
+                                        <input matInput [formControlName]="i" required>
+                                    </mat-form-field>
+                                </div>
+
+
                             </div>
-                              
-                            
-                        </div>
-                    
-                    </form>
-                    <button  (click)="submitAddress()" mat-flat-button color="accent">Submit</button>
-                </mat-tab>
 
-            <br>
+                        </form>
+                        <button (click)="submitAddress()" mat-flat-button color="accent">Submit</button>
+                        <button mat-flat-button *ngIf="isEdit" mat-button (click)="submitRecord()" color="accent"
+                            cdkFocusInitial>Submit</button>
+                    </mat-tab>
 
-          
+                    <br>
 
-               
-           
-        </mat-tab-group>
 
-    </div>
-   
 
-        <!-- <div formArrayName="newAddress"> -->
 
-            <!-- <button mat-flat-button *ngIf="isEdit" mat-button (click)="addAddress()" color="primary"
-            cdkFocusInitial>Add Address</button> -->
-        <!-- </div>
-         -->
 
-   
+                </mat-tab-group>
 
-</mat-dialog-content>
+            </div>
 
-<mat-dialog-actions align="end">
 
-    <button mat-flat-button color="warn" mat-dialog-close>Close</button>
-    <button *ngIf="data.status==0" (click)="activateRecord()" mat-dialog-close mat-flat-button color="accent">Activate</button>
-    <button *ngIf="data.status==1" (click)="deactivateRecord()" mat-dialog-close mat-flat-button color="primary">Deactivate</button>
 
-    <button *ngIf="!isEdit&&data.status==1" mat-button (click)="editRecord()" >Edit Record</button>
+
+
+        </mat-dialog-content>
 
     
-    <button *ngIf="isEdit" mat-button (click)="closeEdit()" >Close Edit</button>
-    <!-- <button *ngIf="isEdit" mat-button (click)="">Add Address</button> -->
+
+    <mat-dialog-actions align="end">
+
+        <button mat-flat-button color="warn" mat-dialog-close>Close</button>
+        <button *ngIf="data.status==0" (click)="showConfirmationScreen()" mat-flat-button
+            color="accent">Activate</button>
+        <button *ngIf="data.status==1" (click)="showConfirmationScreenDeactivate()" mat-flat-button
+            color="primary">Deactivate</button>
+
+        <button *ngIf="!isEdit&&data.status==1" mat-button (click)="editRecord()">Edit Record</button>
+        <button *ngIf="isEdit" mat-button (click)="closeEdit()">Close Edit</button>
 
 
-</mat-dialog-actions>
+    </mat-dialog-actions>
+    </div>
 
-<!-- {{addressForm|json}} -->
+
+
+    <div *ngIf="isConfirmationScreen" class="form-container">
+        <mat-dialog-content class="mat-typography">
+            <h2 mat-dialog-title>Attention!</h2>
+            <mat-dialog-content>
+
+                <p>{{ actionSelected ? "Would you like to activate this patient?" : "Would you like to deactivate this
+                    patient?" }} </p>
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+                <button mat-button (click)="showConfirmationScreen()"> Cancel</button>
+                <button (click)="activateRecord()" *ngIf="actionSelected" mat-dialog-close mat-raised-button
+                    color="primary">Activate</button>
+                <button (click)="deactivateRecord()" *ngIf="!actionSelected" mat-dialog-close mat-raised-button
+                    color="primary">Deactivate</button>
+            </mat-dialog-actions>
+        </mat-dialog-content>
+    </div>
+</div>

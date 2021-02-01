@@ -30,7 +30,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
 
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -83,8 +83,9 @@ import { ExportRecordService } from './services/export-record.service';
     MatCardModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
 
+    ToastrModule.forRoot(),
   ],
   providers: [ViewRecordService, PatientService, ExportRecordService],
   bootstrap: [AppComponent]

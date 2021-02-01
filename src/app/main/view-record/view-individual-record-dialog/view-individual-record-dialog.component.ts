@@ -6,6 +6,7 @@ import { AddressService } from 'src/app/services/add-address.service';
 import { NewAddress } from 'src/app/models/address.model';
 import { Patient } from 'src/app/models/patient.model';
 import {StatusService} from '../../../services/status.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-view-individual-record-dialog',
   templateUrl: './view-individual-record-dialog.component.html',
@@ -15,8 +16,9 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   recordForm: FormGroup;
   isEdit=false;
   newAddress = new FormArray([]);
-  constructor(@Inject(MAT_DIALOG_DATA) public data,private formBuilder: FormBuilder,private statusService: StatusService,  private addressService:AddressService) { } 
-
+  constructor(@Inject(MAT_DIALOG_DATA) public data,private formBuilder: FormBuilder,private statusService: StatusService,  private addressService:AddressService, private toastr: ToastrService) { } 
+  isConfirmationScreen: boolean = false
+  actionSelected: boolean
   submitted = false;
   addressForm:FormGroup;
   private patient: Patient[] = [];
@@ -88,7 +90,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   activateRecord(){
     let body = {'status': 1};
     this.statusService.updateStatus(body, this.data.patientId).subscribe(p=>{
-      console.log("asdasd")
+      this.toastr.success('Success', 'Patient is now activated');
     });
   }
   
@@ -96,7 +98,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   deactivateRecord(){
     let body = {'status': 0};
     this.statusService.updateStatus(body, this.data.patientId).subscribe(p=>{
-      console.log("asdasd")
+      this.toastr.error('Deactivated!', 'Patient is now deactivated')
     });
 
   }
@@ -142,6 +144,16 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     this.isEdit=false;
     this.recordForm.disable();
 
+  }
+
+  showConfirmationScreen() {
+    this.actionSelected = true
+    this.isConfirmationScreen = !this.isConfirmationScreen
+  }
+
+  showConfirmationScreenDeactivate() {
+    this.actionSelected = false;
+    this.isConfirmationScreen = !this.isConfirmationScreen
   }
   
 }
