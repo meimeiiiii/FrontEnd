@@ -25,7 +25,7 @@ export interface UserData {
 })
 export class ViewRecordComponent implements OnInit {
 
-  displayedColumns: string[] = ['patientId', 'firstName', 'middleName', 'lastName', 'email', 'contactNumber', 'date', 'gender', 'address', 'status', 'actions'];
+  displayedColumns: string[] = ['patientId', 'firstName', 'middleName', 'lastName', 'email', 'contactNumber',  'status', 'actions'];
   dataSource: MatTableDataSource<Patient>;
 
   activatedRecords;

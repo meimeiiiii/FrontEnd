@@ -49,7 +49,7 @@
                             <div>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <mat-form-field *ngIf="isShownBirthdate">
-                                    <mat-date-range-input [rangePicker]="myPicker" [ngClass]="{'form-submitted': formSubmitted}">
+                                    <mat-date-range-input [rangePicker]="myPicker" [ngClass]="{'form-submitted': formSubmitted}" [max]="maxDate">
                                         <input matStartDate formControlName="startDate" placeholder="Start date">
                                         <input matEndDate formControlName="endDate" placeholder="End date">
                                     </mat-date-range-input>
