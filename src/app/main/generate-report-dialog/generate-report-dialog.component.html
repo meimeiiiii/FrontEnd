@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>Export to Excel file (.xlsx)</h2>
+<form [formGroup]="filter" (ngSubmit)="onSubmit($event)">
+    <mat-dialog-content>
+            <mat-slide-toggle formControlName="filterValue"  (change)="toggleShowFilter()">
+                Filter
+            </mat-slide-toggle>
+            <div>
+                <mat-list>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <mat-slide-toggle formControlName="status" *ngIf="isShownFilter" (change)="toggleShowStatus()">Status</mat-slide-toggle>
+                            <div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <mat-radio-group aria-label="Status" formControlName="statusValue" *ngIf="isShownStatus" [ngClass]="{'form-submitted': formSubmitted}">
+                                    <mat-radio-button value="activated">Activated&nbsp;&nbsp;</mat-radio-button>
+                                    <mat-radio-button value="deactivated">Deactivated&nbsp;&nbsp;</mat-radio-button>
+                                </mat-radio-group> 
+                            </div>
+                            <div>
+                                <mat-error *ngIf="this.submitted && this.isShownStatus && this.filter.get('statusValue').value === ''">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Please select one.
+                                </mat-error>
+                            </div>
+                </mat-list>
+                <mat-list>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <mat-slide-toggle formControlName="gender" *ngIf="isShownFilter" (change)="toggleShowGender()">Gender</mat-slide-toggle>
+                        <div style="display: flex; justify-content: space-around">
+                            <div class="gender-select">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <mat-select id="genderCheckbox" formControlName="genderCheckbox" *ngIf="isShownGender" [ngClass]="{'form-submitted': formSubmitted}" placeholder="Select atleast one" multiple>
+                                    <mat-option value="male">Male</mat-option>
+                                    <mat-option value="female">Female</mat-option>
+                                    <mat-option value="others">Others</mat-option>
+                                </mat-select>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>    
+                            <div>
+                                <mat-error *ngIf="this.submitted && this.isShownGender && this.filter.get('genderCheckbox').value === ''">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Please select atleast one.
+                                </mat-error>
+                            </div>
+                </mat-list>
+                <mat-list>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <mat-slide-toggle formControlName="birthdate" *ngIf="isShownFilter" (change)="toggleShowBirthdate()">Birthdate</mat-slide-toggle>
+                            <div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <mat-form-field *ngIf="isShownBirthdate">
+                                    <mat-date-range-input [rangePicker]="myPicker" [ngClass]="{'form-submitted': formSubmitted}">
+                                        <input matStartDate formControlName="startDate" placeholder="Start date">
+                                        <input matEndDate formControlName="endDate" placeholder="End date">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="myPicker"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #myPicker></mat-date-range-picker>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-error *ngIf="this.submitted && this.isShownBirthdate && (this.filter.get('startDate').value === '' || this.filter.get('endDate').value === '' || this.filter.get('startDate').value === null || this.filter.get('endDate').value === null)">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Please enter the date range.
+                                </mat-error>
+                            </div>
+                </mat-list>    
+                <div>
+                    <mat-error *ngIf="!checkFiltersValid()">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Please select a field to filter.
+                    </mat-error>
+                </div>         
+            </div>
+    </mat-dialog-content>            
+    <mat-dialog-actions align="end">
+        <button mat-flat-button color="warn" mat-dialog-close>Cancel</button>
+        <button mat-flat-button color="primary" type="submit" >Confirm</button>
+    </mat-dialog-actions>        
+</form>
+
+

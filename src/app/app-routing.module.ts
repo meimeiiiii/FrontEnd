@@ -5,9 +5,7 @@ import { AppComponent } from '../app/app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AddRecordComponent } from './main/add-record/add-record.component';
 import { ViewRecordComponent } from './main/view-record/view-record.component';
-import { ActivateRecordComponent } from './main/activate-record/activate-record.component';
-import { DeactivateRecordComponent } from './main/deactivate-record/deactivate-record.component';
-import { GenerateReportComponent } from './main/generate-report/generate-report.component';
+import { GenerateReportDialogComponent } from './main/generate-report-dialog/generate-report-dialog.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -17,9 +15,7 @@ const routes: Routes = [
 
       { path: 'add-record', component: AddRecordComponent },
       { path: 'view-record', component: ViewRecordComponent },
-      { path: 'activate-record', component: ActivateRecordComponent },
-      { path: 'deactivate-record', component: DeactivateRecordComponent },
-      { path: 'generate-report', component: GenerateReportComponent },
+      { path: 'generate-report', component: GenerateReportDialogComponent },
       { path: '**', redirectTo: 'add-record', pathMatch: 'full' },
     ]
   },

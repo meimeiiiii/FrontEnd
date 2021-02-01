@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GenerateReportDialogComponent } from './generate-report-dialog/generate-report-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+
+  openDialog() {
+    const dialogRef = this.dialog.open(GenerateReportDialogComponent, {
+      height: '520px', 
+      width: '400px',
+    });
+   
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

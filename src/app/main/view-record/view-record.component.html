@@ -1,1 +1,121 @@
-<p>view-record works!</p>
+<div class="container">
+
+
+    <div>
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. John Doe" #input>
+        </mat-form-field>
+        <!-- <mat-slide-toggle [(ngModel)]="isChecked" (change)="toggleSourceData()" [color]="color" [checked]="checked"
+            [disabled]="disabled">
+            Toggle Records
+        </mat-slide-toggle> -->
+
+        <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle  value="true">Enabled</mat-button-toggle>
+            <mat-button-toggle value="italic">Disabled</mat-button-toggle>
+            <mat-button-toggle value="underline">All</mat-button-toggle>
+          </mat-button-toggle-group> -->
+
+        <mat-button-toggle-group #group="matButtonToggleGroup" value="All">
+            <mat-button-toggle (change)="onValChange($event.value)" value="Activated">
+                <span>Activated</span>
+            </mat-button-toggle>
+            <mat-button-toggle (change)="onValChange($event.value)" value="Deactivated">
+                <span>Deactivated</span>
+            </mat-button-toggle>
+
+            <mat-button-toggle (change)="onValChange($event.value)" value="All">
+                <span>All</span>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+        <div class="mat-elevation-z8">
+            <table style="width:100%" mat-table [dataSource]="dataSource" matSort>
+
+
+                <ng-container matColumnDef="patientId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.patientId}} </td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.firstName}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="middleName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.middleName}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Naame </th>
+                    <td mat-cell *matCellDef="let row"> {{row.lastName}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="contactNumber">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact Number </th>
+                    <td mat-cell *matCellDef="let row"> {{row.contactNumber}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Birthday </th>
+                    <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="gender">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
+                    <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+                    <td mat-cell *matCellDef="let row"> {{row.address}} </td>
+                </ng-container>
+
+
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                    <td mat-cell *matCellDef="let row"> {{row.status==1?"Activated":"Deactivated"}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+
+                        <button (click)="openDialog(row)" mat-flat-button color="primary">View Record</button>
+                    </td>
+                </ng-container>
+
+
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+
+
+
+
+            </table>
+            <div class="spinner" *ngIf="isLoading">
+                <mat-spinner>
+                </mat-spinner>
+            </div>
+
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+        </div>
+
+    </div>
+</div>
