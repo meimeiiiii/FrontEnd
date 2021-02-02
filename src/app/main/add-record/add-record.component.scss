@@ -1,8 +1,3 @@
-.submit-form {
-  position: fixed; /* or absolute */
-    top: 10%;
-    left: 10%;
-}
 
 .column {
   flex: 50%;
@@ -14,4 +9,10 @@
   position:fixed;
     top: 40%;
     left: 10%;
+}
+
+.submit-form {
+  position: relative; /* or absolute */
+  top: 5%;
+  left: 100%;
 }

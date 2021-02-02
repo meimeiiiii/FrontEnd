@@ -19,7 +19,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,15 +27,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-
-
 import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AddRecordComponent } from './main/add-record/add-record.component';
 import { ViewRecordComponent } from './main/view-record/view-record.component';
-
 import { ViewRecordService } from "../app/services/view-record.service";
 import { PatientService } from './services/patient.service';
 import { GenerateReportDialogComponent } from './main/generate-report-dialog/generate-report-dialog.component';
@@ -88,6 +84,8 @@ import { ExportRecordService } from './services/export-record.service';
     ToastrModule.forRoot(),
   ],
   providers: [ViewRecordService, PatientService, ExportRecordService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ViewIndividualRecordDialogComponent]
+  
 })
 export class AppModule { }

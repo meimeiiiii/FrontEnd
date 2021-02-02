@@ -9,6 +9,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewIndividualRecordDialogComponent } from './view-individual-record-dialog/view-individual-record-dialog.component';
 import { MatTable } from '@angular/material/table';
 
+export interface UserData {
+  id: string;
+  name: string;
+  progress: string;
+  color: string;
+}
 
 @Component({
   selector: 'app-view-record',

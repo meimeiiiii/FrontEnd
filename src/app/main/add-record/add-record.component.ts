@@ -20,7 +20,7 @@ export class AddRecordComponent implements OnInit {
   ngOnInit(): void {
     this.addPatient=this.formBuilder.group({
       firstName:["", [Validators.required]],
-      middleName:["", [Validators.required]],
+      middleName:[""],
       lastName:["", [Validators.required]],
       email:["", [Validators.required,Validators.email]],
       contactNumber:["", [Validators.required, Validators.pattern("[0-9]{11}")]],
