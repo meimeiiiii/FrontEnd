@@ -16,8 +16,6 @@ export interface UserData {
   color: string;
 }
 
-
-
 @Component({
   selector: 'app-view-record',
   templateUrl: './view-record.component.html',

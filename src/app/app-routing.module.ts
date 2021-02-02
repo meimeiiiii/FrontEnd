@@ -5,6 +5,8 @@ import { AppComponent } from '../app/app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AddRecordComponent } from './main/add-record/add-record.component';
 import { ViewRecordComponent } from './main/view-record/view-record.component';
+// import { GenerateReportComponent } from './main/generate-report/generate-report.component';
+import { ViewIndividualRecordDialogComponent } from './main/view-record/view-individual-record-dialog/view-individual-record-dialog.component';
 import { GenerateReportDialogComponent } from './main/generate-report-dialog/generate-report-dialog.component';
 
 const routes: Routes = [
@@ -15,6 +17,7 @@ const routes: Routes = [
 
       { path: 'add-record', component: AddRecordComponent },
       { path: 'view-record', component: ViewRecordComponent },
+      { path: 'view-address/:p_id', component: ViewIndividualRecordDialogComponent },
       { path: 'generate-report', component: GenerateReportDialogComponent },
       { path: '**', redirectTo: 'add-record', pathMatch: 'full' },
     ]
